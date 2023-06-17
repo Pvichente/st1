@@ -1,0 +1,35 @@
+#Consultoria 1
+
+import pandas as pd 
+import numpy as np
+import requests 
+
+"""
+Importamos la base de datos con los nombres de la empresa
+Es necesario sustituir en la variable "datafile" la dirección donde se encuentra guardado el archivo
+"""
+
+datafile = "/Users/pva/Downloads/S29 Sociedades Cooperativas de Ahorro y Préstamo.xlsx"
+df = pd.read_excel(datafile)
+df.head()
+df.shape
+
+#Seleccionamos la columna que contiene el nombre de las empresas
+df["Razón Social"]
+search_word = ["energía","paneles solares"]
+companies_list = df["Razón Social"]
+companies_list.head()
+
+
+#Hacemos el request de Google
+url= "https://news.google.com/home?hl=es-419&gl=MX&ceid=MX:es-419"
+page = requests.get(url)
+page.text
+
+
+for company_name in companies_list:
+  for search_word in search_words:
+    query = 'q=' + '"' + company + '" + "' + search_word + '"'
+    url = "https://www.google.com/search?" + query + "&tbm=nws"
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
